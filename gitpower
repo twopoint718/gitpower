@@ -1,0 +1,35 @@
+#!/bin/sh
+
+###############################################################################
+#
+# COMPUTE YOUR TRUE GIT POWER. CHALLENGE YOUR FRIENDS.  ...THEY'LL SOON BE YOUR
+# FORMER FRIENDS WHEN YOU HAVE MORE GITPOWER.  SHUTUP, THEM! YOU DON'T NEED
+# THOSE LOSERS PLACE REAL-MONEY BETS. GET SUPER RICH. TELL YOUR BOSS YOU'RE
+# BETTING ON GIT! HE'LL BE ALL LIKE "OKAY, THAT'S COOL"
+#
+###############################################################################
+
+mydir=$(pwd)
+
+echo $mydir
+
+if test ! -d $mydir/.git/objects
+then
+  echo "YOU NEED TO BE IN THE ROOT OF A GIT DIRECTORY"
+  echo "       IF YOU WANT TO COMPUTE YOUR           "
+  echo "              GITPOWER!!!!1                  "
+  exit 1
+fi
+
+# count files in .git/objects/
+# NERDS would say that these are the list of two-digit hash prefixes...
+# SHUTUP NERD! THEY ARE YOUR HIDDEN TRUE GITPOWER!!!
+num=$(du .git/objects/* | wc -l)
+num=$((num - 2))
+scorecmd="du .git/objects/* | echo \"scale=4; $num/256*100\" | bc"
+
+score=$(eval $scorecmd)
+
+echo "YOUR GIT POWER IS $score OUT OF 100"
+
+exit 0
